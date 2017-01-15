@@ -24,9 +24,10 @@ class OperationsGateway
      */
     public function fetchAll($fileName)
     {
-       return $this->formatter->formatContent(
-           $this->get($fileName)
-       );
+        return $this->formatter
+            ->formatContent(
+                $this->get($fileName)
+            );
     }
 
 

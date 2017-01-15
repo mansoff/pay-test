@@ -24,5 +24,8 @@ $container->register('operations.repository', \ExampleBundle\Service\OperationsR
     ->addArgument(new Reference('operations.gateway'))
     ->addArgument(new Reference('operation_builder'));
 
+$container->register('fees.config', \ExampleBundle\Service\Fees\FeesConfig::class);
+$container->register('fee.calculator', \ExampleBundle\Service\FeeCalculator::class)
+    ->addArgument(new Reference('fees.config'));
 
 return $container;

@@ -27,16 +27,16 @@ class OperationsRepository
         $this->builder = $builder;
     }
 
+    /**
+     * @param $fileName
+     *
+     * @return \Generator|Operation[]|null
+     */
     public function getOperations($fileName)
     {
-        $result = [];
         $lines = $this->gateway->fetchAll($fileName);
         foreach ($lines as $line) {
-            if ($operation = $this->builder->fromString($line)) {
-                $result[] = $operation;
-            }
+            yield $this->builder->fromString($line);
         }
-
-        return $result;
     }
 }

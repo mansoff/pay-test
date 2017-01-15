@@ -1,13 +1,14 @@
 <?php
 namespace ExampleBundle\Command;
 
+use ExampleBundle\Service\FeeCalculator;
+use ExampleBundle\Service\Operation;
 use ExampleBundle\Service\OperationsRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Finder\Finder;
 
 class ExampleCommand extends Command
 {
@@ -53,10 +54,16 @@ class ExampleCommand extends Command
     {
         /** @var OperationsRepository $operationsRepository */
         $operationsRepository = $this->container->get('operations.repository');
+        /** @var FeeCalculator $feeCalculator */
+        $feeCalculator = $this->container->get('fee.calculator');
         $operations = $operationsRepository->getOperations(
             $input->getArgument(self::ARGUMENT_FILE_NAME)
         );
-        var_dump($operations);
+        foreach ($operations as $operation) {
+            if ($operation instanceof Operation) {
+                $output->writeln($feeCalculator->getFee($operation));
+            }
+        }
         $output->writeln('Hello world');
     }
 }
