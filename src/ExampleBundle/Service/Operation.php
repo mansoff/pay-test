@@ -92,4 +92,12 @@ class Operation
     {
         return $this->currency;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullType()
+    {
+        return $this->getUserType() . '_' . $this->getType();
+    }
 }

@@ -2,6 +2,7 @@
 namespace ExampleBundle\Command;
 
 use ExampleBundle\Service\FeeCalculator;
+use ExampleBundle\Service\Math;
 use ExampleBundle\Service\Operation;
 use ExampleBundle\Service\OperationsRepository;
 use Symfony\Component\Console\Command\Command;
@@ -31,15 +32,9 @@ class ExampleCommand extends Command
     protected function configure()
     {
         $this
-            // the name of the command (the part after "bin/console")
             ->setName('pay:run')
             ->addArgument(self::ARGUMENT_FILE_NAME, InputArgument::REQUIRED, 'Input file name')
-
-            // the short description shown while running "php bin/console list"
-            ->setDescription('Writes hello world')
-
-            // the full command description shown when running the command with
-            // the "--help" option
+            ->setDescription('Pay operation fee calculator')
             ->setHelp("This command allows you to write hello world...")
         ;
     }
@@ -59,11 +54,15 @@ class ExampleCommand extends Command
         $operations = $operationsRepository->getOperations(
             $input->getArgument(self::ARGUMENT_FILE_NAME)
         );
+        $math = new Math();
         foreach ($operations as $operation) {
             if ($operation instanceof Operation) {
-                $output->writeln($feeCalculator->getFee($operation));
+                $output->writeln(
+                    $math->convertToOutput(
+                        $feeCalculator->getFee($operation)
+                    )
+                );
             }
         }
-        $output->writeln('Hello world');
     }
 }

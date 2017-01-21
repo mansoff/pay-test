@@ -1,4 +1,8 @@
 <?php
+/**
+ * čia as atskirčiau web/index.php nuo app/console.php,
+ * bet reikalavime buvo index php
+ */
 if (!empty($argv)) {
     $container = require __DIR__ . '/../app/preloader.php';
 

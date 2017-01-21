@@ -26,6 +26,13 @@ $container->register('operations.repository', \ExampleBundle\Service\OperationsR
 
 $container->register('fees.config', \ExampleBundle\Service\Fees\FeesConfig::class);
 $container->register('fee.calculator', \ExampleBundle\Service\FeeCalculator::class)
-    ->addArgument(new Reference('fees.config'));
+    ->addArgument(new Reference('fees.config'))
+    ->addArgument(new Reference('exchange.service'));
+
+$container->register('exchange.service', \ExampleBundle\Service\Exchange::class)
+    ->addArgument([
+        'USD' => '1.1497',
+        'JPY' => '129.53',
+    ]);
 
 return $container;
