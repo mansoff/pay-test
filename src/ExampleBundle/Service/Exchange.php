@@ -28,13 +28,22 @@ class Exchange implements MathInterface
     public function convert($from, $to, $sum)
     {
         if ($from === 'EUR') {
-            return bcmul($sum, $this->rates[$to], self::BC_SCALE_EXCHANGE);
+            $rateIndex = $to;
+        } elseif ($to === 'EUR') {
+            $rateIndex = $from;
+        } else {
+            throw new \Exception('From or to currency must be EUR');
         }
 
-        if ($to === 'EUR') {
-            return bcmul($sum, $this->rates[$from], self::BC_SCALE_EXCHANGE);
+        if (!isset($this->rates[$rateIndex])) {
+            throw new \Exception(
+                sprintf(
+                    'We don\'t have rates from EUR to ',
+                    $rateIndex
+                )
+            );
         }
 
-        throw new \Exception('From or to currency must be EUR');
+        return bcmul($sum, $this->rates[$rateIndex], self::BC_SCALE_EXCHANGE);
     }
 }

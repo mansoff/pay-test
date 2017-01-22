@@ -14,10 +14,19 @@ class LegalInFee extends AbstractFee
     public function calculateFee(Operation $operation, FeesConfig $feesConfig)
     {
         $fee = $this->fetchFee($operation, $feesConfig);
-        $totalFee = bcmul($operation->getSum(), $fee['percent'], 2);
+        $maxFee = $fee['max'];
+        $totalFee = bcmul($operation->getSum(), $fee['percent'], self::BC_SCALE);
 
-        //if $totalFee > $fee['max']
-        if (bccomp($totalFee, $fee['max'], self::BC_SCALE) === 1) {
+        if ($fee['currency'] !== $operation->getCurrency()) {
+            $maxFee = $this->exchange->convert(
+                $fee['currency'],
+                $operation->getCurrency(),
+                $maxFee
+            );
+        }
+
+        //if $totalFee > $maxFee
+        if (bccomp($totalFee, $maxFee, self::BC_SCALE) === 1) {
             $totalFee = $fee['max'];
         }
 

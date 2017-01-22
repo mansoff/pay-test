@@ -20,7 +20,12 @@ class FeeCalculator
      */
     private $exchange;
 
-
+    /**
+     * FeeCalculator constructor.
+     *
+     * @param FeesConfig $feesConfig
+     * @param Exchange $exchange
+     */
     public function __construct(
         FeesConfig $feesConfig,
         Exchange $exchange
@@ -28,6 +33,13 @@ class FeeCalculator
         $this->feesConfig = $feesConfig;
         $this->exchange = $exchange;
     }
+
+    /**
+     * @param Operation $operation
+     *
+     * @return string
+     * @throws \Exception
+     */
     public function getFee(Operation $operation)
     {
         switch ($operation->getFullType()) {

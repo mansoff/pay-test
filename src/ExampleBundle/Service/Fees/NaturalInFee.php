@@ -1,19 +1,10 @@
 <?php
 namespace ExampleBundle\Service\Fees;
 
-use ExampleBundle\Service\Exchange;
 use ExampleBundle\Service\Operation;
 
 class NaturalInFee extends AbstractFee
 {
-    protected $exchange;
-
-    public function __construct(
-        Exchange $exchange
-    ) {
-        $this->exchange = $exchange;
-    }
-
     /**
      * @param Operation $operation
      * @param FeesConfig $feesConfig
@@ -34,7 +25,7 @@ class NaturalInFee extends AbstractFee
             );
         }
 
-        //if $totalFee > $fee['max']
+        //if $totalFee > $maxFee
         if (bccomp($totalFee, $maxFee, self::BC_SCALE) === 1) {
             $totalFee = $maxFee;
         }
