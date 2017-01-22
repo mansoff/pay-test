@@ -27,7 +27,7 @@ class LegalInFee extends AbstractFee
 
         //if $totalFee > $maxFee
         if (bccomp($totalFee, $maxFee, self::BC_SCALE) === 1) {
-            $totalFee = $fee['max'];
+            $totalFee = $maxFee;
         }
 
         return $totalFee;

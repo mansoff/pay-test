@@ -14,11 +14,20 @@ class LegalOutFee extends AbstractFee
     public function calculateFee(Operation $operation, FeesConfig $feesConfig)
     {
         $fee = $this->fetchFee($operation, $feesConfig);
-        $totalFee = bcmul($operation->getSum(), $fee['percent'], 2);
+        $minFee = $fee['min'];
+        $totalFee = bcmul($operation->getSum(), $fee['percent'], self::BC_SCALE);
 
-        // if $fee['min'] > $totalFee
-        if (bccomp($fee['min'], $totalFee, self::BC_SCALE) === 1) {
-            $totalFee = $fee['min'];
+        if ($fee['currency'] !== $operation->getCurrency()) {
+            $minFee = $this->exchange->convert(
+                $fee['currency'],
+                $operation->getCurrency(),
+                $minFee
+            );
+        }
+
+        // if $minFee < $totalFee
+        if (bccomp($minFee, $totalFee, self::BC_SCALE) === 1) {
+            $totalFee = $minFee;
         }
 
         return $totalFee;

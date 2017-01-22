@@ -3,6 +3,7 @@ namespace ExampleBundle\Service\Fees;
 
 class FeesConfig
 {
+    //@todo move to DI
     protected $map = [
         'cash_in' => [
             'legal' => [
