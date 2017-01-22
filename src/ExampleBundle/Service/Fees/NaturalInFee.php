@@ -7,13 +7,12 @@ class NaturalInFee extends AbstractFee
 {
     /**
      * @param Operation $operation
-     * @param FeesConfig $feesConfig
      *
      * @return string
      */
-    public function calculateFee(Operation $operation, FeesConfig $feesConfig)
+    public function calculateFee(Operation $operation)
     {
-        $fee = $this->fetchFee($operation, $feesConfig);
+        $fee = $this->fetchFee($operation);
         $maxFee = $fee['max'];
         $totalFee = bcmul($operation->getSum(), $fee['percent'], self::BC_SCALE);
 

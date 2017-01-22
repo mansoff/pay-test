@@ -23,6 +23,12 @@ class FeesConfig
                 'min' => '0.50',
                 'currency' => 'EUR',
             ],
+            'natural' => [
+                'percent' => '0.003',
+                'weekSum' => '1000.00',
+                'currency' => 'EUR',
+                'freeOperations' => '3',
+            ],
         ],
     ];
 

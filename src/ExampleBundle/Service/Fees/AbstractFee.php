@@ -13,33 +13,39 @@ abstract class AbstractFee implements MathInterface
     protected $exchange;
 
     /**
+     * @var FeesConfig
+     */
+    protected $feesConfig;
+
+    /**
      * NaturalInFee constructor.
      *
      * @param Exchange $exchange
+     * @param FeesConfig $feesConfig
      */
     public function __construct(
-        Exchange $exchange
+        Exchange $exchange,
+        FeesConfig $feesConfig
     ) {
         $this->exchange = $exchange;
+        $this->feesConfig = $feesConfig;
     }
 
     /**
      * @param Operation $operation
-     * @param FeesConfig $feesConfig
      *
      * @return string
      */
-    abstract public function calculateFee(Operation $operation, FeesConfig $feesConfig);
+    abstract public function calculateFee(Operation $operation);
 
     /**
      * @param Operation $operation
-     * @param FeesConfig $feesConfig
      *
      * @return array
      */
-    public function fetchFee(Operation $operation, FeesConfig $feesConfig)
+    public function fetchFee(Operation $operation)
     {
-        return $feesConfig->fetch(
+        return $this->feesConfig->fetch(
             $operation->getType(),
             $operation->getUserType()
         );
