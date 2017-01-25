@@ -2,8 +2,9 @@
 namespace ExampleBundleTest\Service;
 
 use ExampleBundle\Service\Exchange;
+use ExampleBundleTest\AbstractTest;
 
-class ExchangeTest extends \PHPUnit_Framework_TestCase
+class ExchangeTest extends AbstractTest
 {
     /**
      * @var Exchange

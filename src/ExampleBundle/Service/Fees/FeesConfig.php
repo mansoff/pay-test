@@ -3,34 +3,13 @@ namespace ExampleBundle\Service\Fees;
 
 class FeesConfig
 {
+    public function __construct(array $feesMap)
+    {
+        $this->map = $feesMap;
+    }
+
     //@todo move to DI
-    protected $map = [
-        'cash_in' => [
-            'legal' => [
-                'percent' => '0.0003',
-                'max' => '5.00',
-                'currency' => 'EUR',
-            ],
-            'natural' => [
-                'percent' => '0.0003',
-                'max' => '5.00',
-                'currency' => 'EUR',
-            ],
-        ],
-        'cash_out' => [
-            'legal' => [
-                'percent' => '0.003',
-                'min' => '0.50',
-                'currency' => 'EUR',
-            ],
-            'natural' => [
-                'percent' => '0.003',
-                'weekSum' => '1000.00',
-                'currency' => 'EUR',
-                'freeOperations' => '3',
-            ],
-        ],
-    ];
+    protected $map = [];
 
     /**
      * @param string $operationType

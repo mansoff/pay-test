@@ -1,14 +1,14 @@
 <?php
 
-namespace ExampleBundle\Service;
+namespace ExampleBundle\Service\Fees;
 
-use ExampleBundle\Service\Fees\AbstractFee;
-use ExampleBundle\Service\Fees\FeesConfig;
+use ExampleBundle\Service\Exchange;
+use ExampleBundle\Service\Operation;
 
 class FeeCalculator
 {
     /**
-     * @var Fees\FeesConfig
+     * @var FeesConfig
      */
     private $feesConfig;
 

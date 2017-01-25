@@ -39,10 +39,37 @@ $container->register(
 $container->register(
     'fees.config',
     \ExampleBundle\Service\Fees\FeesConfig::class
-);
+)
+    ->addArgument([
+        'cash_in' => [
+            'legal' => [
+                'percent' => '0.0003',
+                'max' => '5.00',
+                'currency' => 'EUR',
+            ],
+            'natural' => [
+                'percent' => '0.0003',
+                'max' => '5.00',
+                'currency' => 'EUR',
+            ],
+        ],
+        'cash_out' => [
+            'legal' => [
+                'percent' => '0.003',
+                'min' => '0.50',
+                'currency' => 'EUR',
+            ],
+            'natural' => [
+                'percent' => '0.003',
+                'week_sum' => '1000.00',
+                'currency' => 'EUR',
+                'free_operations' => '3',
+            ],
+        ],
+    ]);
 $container->register(
     'fee.calculator',
-    \ExampleBundle\Service\FeeCalculator::class
+    \ExampleBundle\Service\Fees\FeeCalculator::class
 )
     ->addArgument(new Reference('fees.config'))
     ->addArgument(new Reference('exchange.service'))

@@ -20,8 +20,9 @@ class CsvFormatter
      */
     protected function replaceNewLine($input)
     {
-        $input = str_ireplace("\r\n", "\n", $input);
-        return str_ireplace("\r", "\n", $input);
+        $input = str_replace("\r\n", "\n", $input);
+        $input = str_replace("\n\r", "\n", $input);
+        return str_replace("\r", "\n", $input);
     }
 
     /**

@@ -94,6 +94,8 @@ class Operation
     }
 
     /**
+     * UserType + OperationType
+     *
      * @return string
      */
     public function getFullType()

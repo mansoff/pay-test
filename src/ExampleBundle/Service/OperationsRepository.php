@@ -22,7 +22,6 @@ class OperationsRepository
         OperationsGateway $gateway,
         OperationBuilder $builder
     ) {
-
         $this->gateway = $gateway;
         $this->builder = $builder;
     }

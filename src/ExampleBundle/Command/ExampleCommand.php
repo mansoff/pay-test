@@ -1,7 +1,7 @@
 <?php
 namespace ExampleBundle\Command;
 
-use ExampleBundle\Service\FeeCalculator;
+use ExampleBundle\Service\Fees\FeeCalculator;
 use ExampleBundle\Service\Math;
 use ExampleBundle\Service\Operation;
 use ExampleBundle\Service\OperationsRepository;
