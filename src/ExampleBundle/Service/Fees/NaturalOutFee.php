@@ -1,10 +1,32 @@
 <?php
 namespace ExampleBundle\Service\Fees;
 
+use ExampleBundle\Service\Exchange;
 use ExampleBundle\Service\Operation;
+use ExampleBundle\Service\WeekGateway;
 
 class NaturalOutFee extends AbstractFee
 {
+    /**
+     * @var WeekGateway
+     */
+    private $weekGateway;
+
+    /**
+     * NaturalOutFee constructor.
+     * @param Exchange $exchange
+     * @param FeesConfig $feesConfig
+     * @param WeekGateway $weekGateway
+     */
+    public function __construct(
+        Exchange $exchange,
+        FeesConfig $feesConfig,
+        WeekGateway $weekGateway
+    ) {
+        parent::__construct($exchange, $feesConfig);
+        $this->weekGateway = $weekGateway;
+    }
+
     /**
      * @var array
      */
@@ -61,42 +83,33 @@ class NaturalOutFee extends AbstractFee
         $date,
         $sum
     ) {
-        $date = new \DateTime($date);
-        $week = $date->format("W");
+        $weekData = $this->weekGateway
+            ->getUserWeekData($user, $date, $freeFee);
 
-        if (!isset($this->history[$user])) {
-            $this->history[$user] = [];
-        }
-        if (!isset($this->history[$user][$week])) {
-            $this->history[$user][$week] = [
-                'sum' => $freeFee,
-                'count' => 1,
-            ];
-        } else {
-            $this->history[$user][$week]['count']++;
-        }
-        if ($this->history[$user][$week]['count'] > $freeOperations) {
+        if ($weekData['count'] > $freeOperations) {
             return $sum;
         }
-        if (bccomp($this->history[$user][$week]['sum'], '0.00') == 0) {
+        if (bccomp($weekData['sum'], '0.00') == 0) {
             return $sum;
         }
 
         $sum = bcsub(
             $sum,
-            $this->history[$user][$week]['sum'],
+            $weekData['sum'],
             self::BC_SCALE
         );
         if (bccomp($sum, '0.00') == -1) {
-            $this->history[$user][$week]['sum'] = bcmul(
+            $updatedSum = bcmul(
                 $sum,
                 '-1',
                 self::BC_SCALE
             );
             $sum = '0.00';
         } else {
-            $this->history[$user][$week]['sum'] = '0.00';
+            $updatedSum = '0.00';
         }
+        $this->weekGateway
+            ->insertUserWeekSum($user, $date, $updatedSum);
 
         return $sum;
     }

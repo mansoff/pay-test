@@ -97,7 +97,8 @@ $container->register(
     \ExampleBundle\Service\Fees\NaturalOutFee::class
 )
     ->addArgument(new Reference('exchange.service'))
-    ->addArgument(new Reference('fees.config'));
+    ->addArgument(new Reference('fees.config'))
+    ->addArgument(new Reference('week.gateway'));
 $container->register(
     'legal_in.fee',
     \ExampleBundle\Service\Fees\LegalInFee::class
@@ -110,5 +111,7 @@ $container->register(
 )
     ->addArgument(new Reference('exchange.service'))
     ->addArgument(new Reference('fees.config'));
+
+$container->register('week.gateway', \ExampleBundle\Service\WeekGateway::class);
 
 return $container;
