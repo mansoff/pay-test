@@ -3,13 +3,20 @@ namespace ExampleBundle\Service\Fees;
 
 class FeesConfig
 {
+    /**
+     * @var array
+     */
+    protected $map = [];
+
+    /**
+     * FeesConfig constructor.
+     *
+     * @param array $feesMap
+     */
     public function __construct(array $feesMap)
     {
         $this->map = $feesMap;
     }
-
-    //@todo move to DI
-    protected $map = [];
 
     /**
      * @param string $operationType

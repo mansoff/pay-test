@@ -27,7 +27,7 @@ class OperationsRepository
     }
 
     /**
-     * @param $fileName
+     * @param string $fileName
      *
      * @return \Generator|Operation[]|null
      */

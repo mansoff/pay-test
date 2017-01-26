@@ -54,11 +54,11 @@ class ExampleCommand extends Command
         $operations = $operationsRepository->getOperations(
             $input->getArgument(self::ARGUMENT_FILE_NAME)
         );
-        $math = new Math();
+
         foreach ($operations as $operation) {
             if ($operation instanceof Operation) {
                 $output->writeln(
-                    $math->convertToOutput(
+                    Math::convertToOutput(
                         $feeCalculator->getFee($operation)
                     )
                 );

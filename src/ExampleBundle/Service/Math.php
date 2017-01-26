@@ -13,7 +13,7 @@ class Math implements MathInterface
      * @param $sum
      * @return string
      */
-    public function convertToOutput($sum)
+    public static function convertToOutput($sum)
     {
         // 0.09 for BC_SCALE == 2
         // 0.009 for BC_SCALE == 3

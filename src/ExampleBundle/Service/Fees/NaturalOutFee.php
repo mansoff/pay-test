@@ -5,8 +5,16 @@ use ExampleBundle\Service\Operation;
 
 class NaturalOutFee extends AbstractFee
 {
+    /**
+     * @var array
+     */
     protected $history = [];
 
+    /**
+     * @param Operation $operation
+     *
+     * @return string
+     */
     public function calculateFee(Operation $operation)
     {
         $fee = $this->fetchFee($operation);
