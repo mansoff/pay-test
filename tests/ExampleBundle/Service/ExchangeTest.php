@@ -15,6 +15,7 @@ class ExchangeTest extends AbstractTest
     {
         $this->testObj = new Exchange([
             'USD' => '1.1497',
+            'JPY' => '129.53',
         ]);
     }
 
@@ -41,8 +42,10 @@ class ExchangeTest extends AbstractTest
     {
         return [
             ['1.1497', 'EUR', 'USD', '1.00'],
-            ['1.1497', 'USD', 'EUR', '1.00'],
-            ['4.9899999999', 'USD', 'EUR', '4.3402626772'],
+            ['0.8697921196', 'USD', 'EUR', '1'],
+            ['4.9899999999', 'EUR', 'USD', '4.3402626772'],
+            ['1', 'JPY', 'EUR', '129.53'],
+            ['129.53', 'EUR', 'JPY', '1'],
         ];
     }
 

@@ -44,6 +44,9 @@ class Exchange implements MathInterface
             );
         }
 
-        return bcmul($sum, $this->rates[$rateIndex], self::BC_SCALE_EXCHANGE);
+        if ($from === 'EUR') {
+            return bcmul($sum, $this->rates[$rateIndex], self::BC_SCALE_EXCHANGE);
+        }
+        return bcdiv($sum, $this->rates[$rateIndex], self::BC_SCALE_EXCHANGE);
     }
 }

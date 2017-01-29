@@ -44,8 +44,8 @@ class NaturalOutFee extends AbstractFee
         $operationSum = $operation->getSum();
         if ($operation->getCurrency() != $fee['currency']) {
             $operationSum = $this->exchange->convert(
-                $fee['currency'],
                 $operation->getCurrency(),
+                $fee['currency'],
                 $operation->getSum()
             );
         }
@@ -85,32 +85,95 @@ class NaturalOutFee extends AbstractFee
     ) {
         $weekData = $this->weekGateway
             ->getUserWeekData($user, $date, $freeFee);
+        $this->weekGateway->incCounter($user, $date);
 
+        if (!$this->isFreeOperationAvailable($weekData, $freeOperations)) {
+            return $sum;
+        }
+
+        if (!$this->isFreeSumAvailable($weekData)) {
+            return $sum;
+        }
+
+        //sumGreater = sum - weekFreeSum
+        $sumGreaterThanFreeOperation = $this->getSumGreaterThanFreeOperation($sum, $weekData);
+
+        if ($this->isGreaterThanZero($sumGreaterThanFreeOperation)) {
+            $this->weekGateway
+                ->updateUserWeekSum($user, $date, self::BC_ZERO);
+
+            return $sumGreaterThanFreeOperation;
+        }
+
+        //$freeReminder = -1 * (sumLowerThanWeekFreeSum - weekFreeSum)
+        $freeReminder = bcmul(
+            $sumGreaterThanFreeOperation,
+            '-1',
+            self::BC_SCALE
+        );
+            ;
+        $this->weekGateway
+            ->updateUserWeekSum($user, $date, $freeReminder);
+
+        return self::BC_ZERO;
+    }
+
+    /**
+     * @param $weekData
+     *
+     * @return bool
+     */
+    protected function isFreeSumAvailable($weekData)
+    {
+        if (bccomp($weekData['sum'], self::BC_ZERO, self::BC_SCALE) == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param array $weekData
+     * @param int $freeOperations
+     *
+     * @return bool
+     */
+    protected function isFreeOperationAvailable(array $weekData, $freeOperations)
+    {
         if ($weekData['count'] > $freeOperations) {
-            return $sum;
-        }
-        if (bccomp($weekData['sum'], '0.00') == 0) {
-            return $sum;
+            return false;
         }
 
-        $sum = bcsub(
-            $sum,
+        return true;
+    }
+
+    /**
+     * @param string $input
+     * @param array $weekData
+     *
+     * @return string $input - $weekFreeSum
+     */
+    protected function getSumGreaterThanFreeOperation(
+        $input,
+        array $weekData
+    ) {
+        return bcsub(
+            $input,
             $weekData['sum'],
             self::BC_SCALE
         );
-        if (bccomp($sum, '0.00') == -1) {
-            $updatedSum = bcmul(
-                $sum,
-                '-1',
-                self::BC_SCALE
-            );
-            $sum = '0.00';
-        } else {
-            $updatedSum = '0.00';
-        }
-        $this->weekGateway
-            ->insertUserWeekSum($user, $date, $updatedSum);
+    }
 
-        return $sum;
+    /**
+     * @param string $sum
+     *
+     * @return bool
+     */
+    protected function isGreaterThanZero($sum)
+    {
+        if (bccomp($sum, self::BC_ZERO, self::BC_SCALE) == 1) {
+            return true;
+        }
+
+        return false;
     }
 }

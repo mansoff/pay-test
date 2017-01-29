@@ -10,6 +10,11 @@
         strict                      = "true"
         syntaxCheck                 = "true"
         bootstrap                   = "tests/bootstrap.php">
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/ExampleBundle/Service</directory>
+        </whitelist>
+    </filter>
 
     <testsuites>
         <testsuite name="Pay test tests">

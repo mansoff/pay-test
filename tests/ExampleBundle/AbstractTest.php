@@ -14,4 +14,19 @@ abstract class AbstractTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
     }
+
+    /**
+     * @param $className
+     * @param $methodName
+     *
+     * @return \ReflectionMethod
+     */
+    public function getInvisibleMethod($className, $methodName)
+    {
+        $class = new \ReflectionClass($className);
+        $method = $class->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method;
+    }
 }

@@ -26,13 +26,26 @@ class WeekGateway
         if (!isset($this->history[$user][$week])) {
             $this->history[$user][$week] = [
                 'sum' => $freeFee,
-                'count' => 1,
+                'count' => 0,
             ];
-        } else {
-            $this->history[$user][$week]['count']++;
         }
 
         return $this->history[$user][$week];
+    }
+
+    /**
+     * @param $user
+     * @param $date
+     *
+     * @return mixed
+     */
+    public function incCounter($user, $date)
+    {
+        $week = $this->getWeekByDate($date);
+        $this->getUserWeekData($user, $date, '0.00');
+        $this->history[$user][$week]['count']++;
+
+        return $this->history[$user][$week]['count'];
     }
 
     /**
@@ -42,8 +55,9 @@ class WeekGateway
      *
      * @return bool
      */
-    public function insertUserWeekSum($user, $date, $sum)
+    public function updateUserWeekSum($user, $date, $sum)
     {
+        $this->getUserWeekData($user, $date, '0.00');
         $week = $this->getWeekByDate($date);
         $this->history[$user][$week]['sum'] = $sum;
 
