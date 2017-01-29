@@ -85,7 +85,7 @@ class NaturalOutFee extends AbstractFee
     ) {
         $weekData = $this->weekGateway
             ->getUserWeekData($user, $date, $freeFee);
-        $this->weekGateway->incCounter($user, $date);
+        $weekData['count'] = $this->weekGateway->incCounter($user, $date);
 
         if (!$this->isFreeOperationAvailable($weekData, $freeOperations)) {
             return $sum;
@@ -126,6 +126,9 @@ class NaturalOutFee extends AbstractFee
     protected function isFreeSumAvailable($weekData)
     {
         if (bccomp($weekData['sum'], self::BC_ZERO, self::BC_SCALE) == 0) {
+            return false;
+        }
+        if (bccomp($weekData['sum'], self::BC_ZERO, self::BC_SCALE) == -1) {
             return false;
         }
         return true;

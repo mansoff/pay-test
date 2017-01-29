@@ -38,7 +38,7 @@ class Exchange implements MathInterface
         if (!isset($this->rates[$rateIndex])) {
             throw new \Exception(
                 sprintf(
-                    'We don\'t have rates from EUR to ',
+                    'We don\'t have rates from EUR to %s',
                     $rateIndex
                 )
             );
