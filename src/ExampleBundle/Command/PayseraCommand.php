@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class ExampleCommand extends Command
+class PayseraCommand extends Command
 {
     const ARGUMENT_FILE_NAME = 'file_name';
     /**

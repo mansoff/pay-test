@@ -6,11 +6,11 @@ use Symfony\Component\DependencyInjection\Reference;
 $container = new ContainerBuilder();
 
 $container->register('console', Symfony\Component\Console\Application::class)
-    ->addMethodCall('add', [new Reference('example.command')]);
+    ->addMethodCall('add', [new Reference('paysera.command')]);
 $container->register('finder', \Symfony\Component\Finder\Finder::class);
 $container->register(
-    'example.command',
-    \ExampleBundle\Command\ExampleCommand::class
+    'paysera.command',
+    \ExampleBundle\Command\PayseraCommand::class
 )
     ->addArgument(new Reference('service_container'));
 
