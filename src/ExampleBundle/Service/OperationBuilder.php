@@ -4,7 +4,7 @@ namespace ExampleBundle\Service;
 class OperationBuilder
 {
     /**
-     * @param $line
+     * @param string $line
      *
      * @return Operation|null
      */

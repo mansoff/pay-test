@@ -3,7 +3,9 @@ namespace ExampleBundle\Service;
 
 class Operation
 {
-    /** Y-m-d */
+    /**
+     * @var string Y-m-d
+     */
     private $date;
 
     /**
@@ -46,7 +48,7 @@ class Operation
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDate()
     {

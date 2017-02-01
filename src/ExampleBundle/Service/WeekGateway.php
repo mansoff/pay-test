@@ -1,5 +1,4 @@
 <?php
-
 namespace ExampleBundle\Service;
 
 class WeekGateway
@@ -34,8 +33,8 @@ class WeekGateway
     }
 
     /**
-     * @param $user
-     * @param $date
+     * @param string $user
+     * @param string $date
      *
      * @return mixed
      */

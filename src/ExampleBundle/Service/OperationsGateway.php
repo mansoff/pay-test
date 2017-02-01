@@ -18,7 +18,7 @@ class OperationsGateway
     }
 
     /**
-     * @param $fileName
+     * @param string $fileName
      *
      * @return array
      */
