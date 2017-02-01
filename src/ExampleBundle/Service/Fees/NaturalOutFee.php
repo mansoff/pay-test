@@ -91,7 +91,10 @@ class NaturalOutFee extends AbstractFee
         }
 
         //sumGreater = sum - weekFreeSum
-        $sumGreaterThanFreeOperation = $this->getSumGreaterThanFreeOperation($sum, $weekData);
+        $sumGreaterThanFreeOperation = $this->getSumGreaterThanFreeOperation(
+            $sum,
+            $weekData
+        );
 
         if ($this->isGreaterThanZero($sumGreaterThanFreeOperation)) {
             $this->weekGateway
@@ -114,11 +117,11 @@ class NaturalOutFee extends AbstractFee
     }
 
     /**
-     * @param $weekData
+     * @param array $weekData
      *
      * @return bool
      */
-    protected function isFreeSumAvailable($weekData)
+    protected function isFreeSumAvailable(array $weekData)
     {
         if (bccomp($weekData['sum'], self::BC_ZERO, self::BC_SCALE) == 0) {
             return false;
@@ -135,8 +138,10 @@ class NaturalOutFee extends AbstractFee
      *
      * @return bool
      */
-    protected function isFreeOperationAvailable(array $weekData, $freeOperations)
-    {
+    protected function isFreeOperationAvailable(
+        array $weekData,
+        $freeOperations
+    ) {
         if ($weekData['count'] > $freeOperations) {
             return false;
         }

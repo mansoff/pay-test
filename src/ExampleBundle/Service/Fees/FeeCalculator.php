@@ -52,7 +52,7 @@ class FeeCalculator
 
         $feeRule = $this->feeMap[$operation->getFullType()];
         if (!$feeRule instanceof AbstractFee) {
-            throw new \Exception('Not AbstractFee instance');
+            throw new \Exception('Not Fees\ instance');
         }
 
         return $feeRule->calculateFee($operation);
