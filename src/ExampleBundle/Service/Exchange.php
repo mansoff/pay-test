@@ -6,7 +6,7 @@ class Exchange implements MathInterface
     /**
      * @var array
      */
-    protected $rates = [];
+    private $rates = [];
 
     /**
      * Exchange constructor.

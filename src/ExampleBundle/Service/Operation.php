@@ -4,32 +4,32 @@ namespace ExampleBundle\Service;
 class Operation
 {
     /** Y-m-d */
-    protected $date;
+    private $date;
 
     /**
      * @var int
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
-    protected $userType;
+    private $userType;
 
     /**
      * @var string
      */
-    protected $type;
+    private $type;
 
     /**
      * @var string
      */
-    protected $sum;
+    private $sum;
 
     /**
      * @var string
      */
-    protected $currency;
+    private $currency;
 
     /**
      * Operation constructor.

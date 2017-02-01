@@ -7,7 +7,7 @@ class WeekGateway
     /**
      * @var array
      */
-    protected $history = [];
+    private $history = [];
 
     /**
      * @param string $user

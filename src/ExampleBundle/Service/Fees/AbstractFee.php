@@ -15,7 +15,7 @@ abstract class AbstractFee implements MathInterface
     /**
      * @var FeesConfig
      */
-    protected $feesConfig;
+    private $feesConfig;
 
     /**
      * NaturalInFee constructor.

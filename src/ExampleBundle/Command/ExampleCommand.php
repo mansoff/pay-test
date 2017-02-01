@@ -17,7 +17,7 @@ class ExampleCommand extends Command
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    private $container;
 
     /**
      * ExampleCommand constructor.

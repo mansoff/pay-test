@@ -1,5 +1,4 @@
 <?php
-
 namespace ExampleBundle\Service\Fees;
 
 use ExampleBundle\Service\Exchange;

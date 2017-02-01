@@ -6,7 +6,7 @@ class FeesConfig
     /**
      * @var array
      */
-    protected $map = [];
+    private $map = [];
 
     /**
      * FeesConfig constructor.
