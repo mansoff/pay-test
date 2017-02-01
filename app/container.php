@@ -5,12 +5,11 @@ use Symfony\Component\DependencyInjection\Reference;
 
 $container = new ContainerBuilder();
 
-$container->register('console', Symfony\Component\Console\Application::class);
 $container->register('console', Symfony\Component\Console\Application::class)
-    ->addMethodCall('add', [new Reference('hello_world.command')]);
+    ->addMethodCall('add', [new Reference('example.command')]);
 $container->register('finder', \Symfony\Component\Finder\Finder::class);
 $container->register(
-    'hello_world.command',
+    'example.command',
     \ExampleBundle\Command\ExampleCommand::class
 )
     ->addArgument(new Reference('service_container'));

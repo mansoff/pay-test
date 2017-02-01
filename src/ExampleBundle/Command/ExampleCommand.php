@@ -29,13 +29,16 @@ class ExampleCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * Configures the current command.
+     */
     protected function configure()
     {
         $this
             ->setName('pay:run')
             ->addArgument(self::ARGUMENT_FILE_NAME, InputArgument::REQUIRED, 'Input file name')
             ->setDescription('Pay operation fee calculator')
-            ->setHelp("This command allows you to write hello world...")
+            ->setHelp("This command allows you to calculate operations fees")
         ;
     }
 
